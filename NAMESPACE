@@ -1,0 +1,2 @@
+export(BHcorrection, classify, importance, NCPUS, seedsFinder, signatureFinder, BICs, testGE, puttingAllTogether, removeGeneFrom, signatureSummaryTable, ensembleTable, searchResultsSummaryTable, goodAndPoorClassification)
+
