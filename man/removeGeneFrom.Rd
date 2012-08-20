@@ -48,29 +48,28 @@ data(geNSCLC)
 geData <- geNSCLC
 data(stNSCLC)
 stData <- stNSCLC
-
 # develop the signature
-aNCPUS <-NCPUS(nchips = 2)
-geneSeed <- which(colnames(geData) == "CCR7")
-signature <- signatureFinder(geneSeed, logFilePrefix = "test", 
-	      cpuCluster = aNCPUS)
-print(signature$signature)
-
-# compute the importances
-aNCPUS <-NCPUS(nchips = 2)
-signature <- importance(signature, cpuCluster = aNCPUS)
+aMakeCluster <- makeCluster(2)
+geneSeed <- which(colnames(geData) == "RNF5")
+signature <- signatureFinder(geneSeed, cpuCluster = aMakeCluster,
+                             stopCpuCluster = FALSE)
+signature <- importance(signature, cpuCluster = aMakeCluster)
 print(signature$importance)
 
-# removing a single gen
-removeGeneFrom(signature, cutoff = 0.1)$signature
+################################
+# 1 step pruning
+removeGeneFrom(signature, cutoff = 0.3)$signature
 
+##################################
 # iterative pruning of the signature
+signature
 repeat {
-    tmp <- removeGeneFrom(signature, cutoff = 0.1)
-    if(is.null(tmp)) break
-    signature <- tmp
-  }  
-print(signature$importance)
+  tmp <- removeGeneFrom(signature, cutoff = 0.3)
+  if(is.null(tmp)) break
+  signature <- tmp
+}  
+signature
+signature$importance
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

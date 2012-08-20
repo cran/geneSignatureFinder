@@ -21,7 +21,7 @@ found in the source of the puttingAllTogether() function.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
- \item{column no.1}{probe/gene found at least one time in some signature.}
+  \item{column no.1}{probe/gene found at least one time in some signature.}
   \item{column no.2}{counts of signature in which the probe/gene is present.}
   \item{column no.3}{mean importance of the probe/gene}
   \item{column no.4}{weighted mean importance}

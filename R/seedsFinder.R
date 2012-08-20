@@ -6,6 +6,7 @@ function(cutoff = 1.95,
  if(areDataNotLoaded()) return(NULL)
   
   if(!is.null(cpuCluster)) {
+    message("Computation started at ", eTime <- Sys.time())
     # export the data to the cluster of cpu's
     clusterExport(cpuCluster, "geData")
     clusterExport(cpuCluster, "stData")
@@ -15,6 +16,7 @@ function(cutoff = 1.95,
 	  ans <- parApply(cpuCluster, geData, 2, checkGeneForSeed, 
                     cutoff = cutoff, evaluateBICs = evaluateBICs)
     stopCluster(cpuCluster)
+    message("Computation ended at ", eTime <- Sys.time())
     return(t(ans))
   }
 

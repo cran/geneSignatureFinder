@@ -1,7 +1,7 @@
 \name{NCPUS}
 \alias{NCPUS}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Set up a cluster of cpu's on the local machine.
+\title{Wrapper function to both makeCluster() and detecCore() functions of the 'parallel' library.
 %%  ~~function to do ... ~~
 }
 \description{The function set up a cluster of 'nchips' cpu's on the local host.
@@ -19,20 +19,18 @@ NCPUS(nchips = FALSE)
 \value{The function returns a structure useful to establish a connection to the
 cluster of cpu's.
 }
-\references{http://sekhon.berkeley.edu/rgenoud/test/AutoCluster3.R
-%% ~put references to the literature/web site here ~
+\details{The use of this function is depreceted. Use makeCluster() instead.
+The function is here for compatibility with the version 2013.08.20 of the library.
 }
-\author{Jasjeet S. Sekhon - UC Berkeley
+\author{Stefano M. Pagnotta and Michele Ceccarelli
 %%  ~~who you are~~
 }
 
 \note{
 The definition and connection to the cpu cluster can be established also by
-using the native function of the snow package. 
+using the makeCluster() native function of the parallel package. 
 %%  ~~further notes~~
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
 %% ~~objects to See Also as 
@@ -44,8 +42,8 @@ using the native function of the snow package.
 detectCores()
 
 # we suggest to set a cluster of maximal dimension -1 to leave a cpu to control the system
-aNCPUS <- NCPUS(nchips = 2)
-stopCluster(aNCPUS)
+aMakeCluster <- makeCluster(2)
+stopCluster(aMakeCluster)
 
 
 }

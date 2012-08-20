@@ -1,2 +1,7 @@
-export(BHcorrection, classify, importance, NCPUS, seedsFinder, signatureFinder, BICs, testGE, puttingAllTogether, removeGeneFrom, signatureSummaryTable, ensembleTable, searchResultsSummaryTable, goodAndPoorClassification)
+export(BHcorrection, classify, importance, NCPUS, seedsFinder, signatureFinder, 
+       BICs, testGE, puttingAllTogether, removeGeneFrom, signatureSummaryTable, ensembleTable, 
+       searchResultsSummaryTable, goodAndPoorClassification)
+import(class, cluster, survival)
+S3method(print, gSignature)
+S3method(plot,  gSignature)
 

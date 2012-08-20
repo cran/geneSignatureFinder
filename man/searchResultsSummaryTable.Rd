@@ -47,14 +47,15 @@ K <- length(seedGenes)
 searchResults <- vector("list", K)
 names(searchResults) <- colnames(geData)[seedGenes]
 
+
+aMakeCluster <- makeCluster(2)
 for(k in 1:K) 
-      searchResults[[k]] <- signatureFinder(seedGenes[k]) 
-print(searchResults)
+  searchResults[[k]] <- signatureFinder(seedGenes[k], 
+    cpuCluster = aMakeCluster, stopCpuCluster = FALSE)
+stopCluster(aMakeCluster)
+searchResults
 signaturesTable <- searchResultsSummaryTable(searchResults)
-print(signaturesTable)
-# save the table in the XLS format, uncomment the following lines.
-#library("WriteXLS")
-#WriteXLS("signaturesTable", row.names = TRUE, "SearchResultsSummaryTable.xls")
+signaturesTable
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -4,7 +4,8 @@
 \description{Given the clustering of the samples in good and poor prognosis associated to the signature, for each gene in the signature the test for the null hypothesis of equality of the expression levels is performed. Additional statistics are provided.
 }
 \usage{
-testGE(aSignatureFinder, permutationReplications = 1000, cpuCluster = NULL, stopCpuCluster = TRUE)
+testGE(aSignatureFinder, permutationReplications = 1000, 
+  cpuCluster = NULL, stopCpuCluster = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -48,18 +49,22 @@ geData <- geNSCLC
 data(stNSCLC)
 stData <- stNSCLC
 # set the dimension of the cpu's cluster 
-# (use a value different from 3 depending on the number of cpu avalilable)
-aNCPUS <-NCPUS(nchips = 2)
+# (use a value different from 2 depending on the number of cpu avalilable)
+aMakeCluster <- makeCluster(2)
 # set the starting gene to SELP
 geneSeed <- which(colnames(geData) == "SELP")
 # run ...
-ans <- signatureFinder(geneSeed, logFilePrefix = "test", cpuCluster = aNCPUS)
-print(ans)
-ans <- testGE(ans)
-print(ans)
-barplot2(t(ans$groupMean), beside = TRUE,
-                   main = paste("Signature starting from:", ans$startingSignature),
-                   legend = paste(colnames(ans$groupMedian), "prognosis group"))
+ans <- signatureFinder(geneSeed, logFilePrefix = "test", 
+		cpuCluster = aMakeCluster, stopCpuCluster = FALSE)
+ans
+ans <- testGE(ans, cpuCluster = aMakeCluster)
+ans$groupMean
+ans$meanDifferencePValue
+#####################
+#library(gplots)
+#barplot2(t(ans$groupMean), beside = TRUE,
+#                   main = paste("Signature starting from:", ans$startingSignature),
+#                   legend = paste(colnames(ans$groupMedian), "prognosis group"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

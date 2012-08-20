@@ -7,35 +7,23 @@ classification procedure in good and poor groups of samples.
 \description{This function label the groups found by the unsupervised classification in good and poor.
 }
 \usage{
-goodAndPoorClassification(clustering, percentile = 0.2)
+goodAndPoorClassification(clustering)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{clustering}{list of so many elements as the number of samples containing the classification in two groups. Missing values are allowed.
+  \item{clustering}{factor of so many elements as the number of samples containing the classification in two groups. Missing values are allowed.
 %%     ~~Describe \code{clustering} here~~
 }
-  \item{percentile}{ real value between 0.0+ and 0.50- (see details)
+  
 }
-}
-\details{The labelling of the two groups in good and poor is obtained through a
-robust interpolation of the two survival curves. 
-For each of the two groups the percentiles at level percentile and 1-percentile of the survival times are computed. The straight line through these two percentile is then evaluated.
-The group for which the line has the lowest slope is labelled as poor.  
-%%  ~~ If necessary, more details than the description above ~~
+\details{The labelling of the two groups in good and poor is obtained through the comparion of the expected and the observed failures computed in the test statistics of the log-rank test. The group for which the expected are more than the observed are classified are good prognosis. The variable stData has to be defined in the environment.
 }
 \value{A factor with levels "good" and "poor".
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
 }
 %%\references{
 %% ~put references to the literature/web site here ~
 %%}
-\author{Stefano M. Pagnotta and Michele Ceccarelli
-%%  ~~who you are~~
-}
+\author{Stefano M. Pagnotta, Michele Ceccarelli and Pietro Zoppoli}
 %%\note{
 %%  ~~further notes~~
 %%}
@@ -49,36 +37,15 @@ The group for which the line has the lowest slope is labelled as poor.
 \examples{
 data(geNSCLC)
 geData <- geNSCLC
+
 data(stNSCLC)
 stData <- stNSCLC
-# set the dimension of the cpu's cluster (use a value different from 3 depending on the number of cpu available)
-aNCPUS <-NCPUS(nchips = 2)
-# set the starting gene to STX1A
-geneSeed <- which(colnames(geData) == "STX1A")
-# run ...
-aSignatureFinder <- signatureFinder(geneSeed, logFilePrefix = "test", cpuCluster = aNCPUS)
-cclassification <- aSignatureFinder$classification
-
-par(mfrow = c(1,2))
-sf <- survfit(stData ~ cclassification)
-plot(sf, main = paste("Survivals for signature starting from:", aSignatureFinder$startingSignature),
-  xlab = paste("tValue(Log-Rank test) = ", round(aSignatureFinder$tValue, 3)),
-  col = c("green", "red"))
-  
-cclassification <- goodAndPoorClassification(cclassification, percentile = .1)
-sf <- survfit(stData ~ cclassification)
-plot(sf, main = paste("Survivals for signature starting from:", aSignatureFinder$startingSignature),
-  xlab = paste("tValue(Log-Rank test) = ", round(aSignatureFinder$tValue, 3)),
-  col = c("green", "red"))
-  
-# if necessary to check all the signatures ...
-#K <- length(searchResults)
-#for(k in 1:K) {
-#  aSignatureFinder <- searchResults[[k]]
-#  cclassification <- aSignatureFinder$classification
-#  cclassification <- goodAndPoorClassification(cclassification, pct = .1)
-#  searchResults[[k]]$classification <- cclassification
-#}    
+######################
+randomClustering  <- runif(nrow(stData)) > .5
+survdiff(stData ~ randomClustering)
+###############
+clusteringByPrognosis <- goodAndPoorClassification(randomClustering)
+survdiff(stData ~ clusteringByPrognosis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

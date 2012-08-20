@@ -11,25 +11,25 @@ Actually the classification method linked is the partitioning around medoids (se
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-classify(data)
+classify(ddata)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{can be either a list of real values (gene expression levels) or a data-matrix where the rows are the samples and the columns are the genes.
+  \item{ddata}{can be either a list of real values (gene expression levels) or a data-matrix where the rows are the samples and the columns are the genes.
 %%     ~~Describe \code{data} here~~
 }
 }
 \details{The function provides two clusters.
 %%  ~~ If necessary, more details than the description above ~~
 }
-\value{If data is a list of real values (1 gene expression levels) the function calls an unbiased version of pam (see pamUnbiased() function for details). In this case two elements are returned
+\value{If ddata is a list of real values (1 gene expression levels) the function calls an unbiased version of pam (see pamUnbiased() function for details). In this case two elements are returned
 %%  ~Describe the value returned
 %%  If it is a LIST, use
   \item{clusters}{list of 1-2 indicators of the two clusters.}
   \item{missing}{list of T-F logical values where T labels the values set to missing by pamUnbiased().}
 %% ...
 
-If data is a real matrix (more than 1 expression levels) the function calls pam() and returns an object of pam class with an additional slot
+If ddata is a real matrix (more than 1 expression levels) the function calls pam() and returns an object of pam class with an additional slot
   \item{clusters}{list of 1-2 indicators of the two clusters.}
 }
 %%\references{
@@ -50,20 +50,20 @@ If data is a real matrix (more than 1 expression levels) the function calls pam(
 \examples{
 # univariate classification
 data(geNSCLC)
-sum(is.na(geNSCLC[, "RET"]))
-ans <- classify(geNSCLC[, "RET"]) 
+sum(is.na(geNSCLC[, "SELP"]))
+ans <- classify(geNSCLC[, "SELP"]) 
 table(ans$clusters)
 sum(ans$missing)
-mean(geNSCLC[which(ans$clusters == 1), "RET"])
-mean(geNSCLC[which(ans$clusters == 2), "RET"])
+mean(geNSCLC[which(ans$clusters == 1), "SELP"], na.rm = TRUE)
+mean(geNSCLC[which(ans$clusters == 2), "SELP"], na.rm = TRUE)
 
 # multivariate classification
 data(geNSCLC)
-data <- geNSCLC[, c("STX1A", "FADD", "STC1", "RNF5", "LAMB1", "RELA", "ID2")]
-ans <- classify(data)$clusters
+ddata <- geNSCLC[, c("STX1A", "FADD", "STC1", "RNF5")]
+ans <- classify(ddata)$clusters
 table(ans)
-rbind(apply(data[ans == 1, ], 2, mean, na.rm = TRUE),
-      apply(data[ans == 2, ], 2, mean, na.rm = TRUE))
+rbind(apply(ddata[ans == 1, ], 2, mean, na.rm = TRUE),
+      apply(ddata[ans == 2, ], 2, mean, na.rm = TRUE))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

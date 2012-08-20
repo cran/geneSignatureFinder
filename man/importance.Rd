@@ -45,15 +45,16 @@ data(geNSCLC)
 geData <- geNSCLC
 data(stNSCLC)
 stData <- stNSCLC
-aNCPUS <-NCPUS(nchips = 2)
+aMakeCluster <- makeCluster(2)
 geneSeed <- which(colnames(geData) == "SELP")
-signature <- signatureFinder(geneSeed, logFilePrefix = "test", cpuCluster = aNCPUS)
-print(signature)
-aNCPUS <-NCPUS(nchips = 2)
-signature <- importance(signature, cpuCluster = aNCPUS)
-print(signature)
+signature <- signatureFinder(geneSeed, 
+  cpuCluster = aMakeCluster, stopCpuCluster = FALSE)
+signature <- importance(signature, cpuCluster = aMakeCluster)
+signature
+signature$importance
+#################################
 barplot(signature$importance, main = "Importance based on L1GeneOut",
- sub = paste("Signature starting from:", signature$startingSignature))
+        sub = paste("Signature starting from:", signature$startingSignature))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

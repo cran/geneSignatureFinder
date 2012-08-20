@@ -62,9 +62,9 @@ geData <- geData[1:50, ]
 stData <- stData[1:50, ]
 dim(geData)
 
-aNCPUS <- NCPUS(nchips = 2)
-ans <- seedsFinder(cpuCluster = aNCPUS)
-head(ans)
+aMakeCluster <- makeCluster(2)
+aSeedsFinder <- seedsFinder(cpuCluster = aMakeCluster)
+head(aSeedsFinder)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

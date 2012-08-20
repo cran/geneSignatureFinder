@@ -14,24 +14,23 @@ sessions.
 
 }
 \usage{
-puttingAllTogether(workingFile = "", nchips = NULL, useCpuCluster = FALSE, alpha = 0.05, 
-saveIndividualSignature = FALSE, saveSurvivalCurvesPlot = FALSE, saveImportancePlot = FALSE, saveRegulationPlot = FALSE)
+puttingAllTogether(workingFile = "", nchips = 2, alpha = 0.05,
+                 saveSurvivalCurvesPlot = FALSE,
+                 saveIndividualSignature = FALSE, 
+                 saveImportancePlot = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{workingFile}{prefix string for the log file and other output}
   \item{nchips}{see the NCPUS() function for details; it has to be set to the number of cpu's to use if useCpuCluster = TRUE}
-  \item{useCpuCluster}{flag to force the parallel computation}
   \item{alpha}{see the BHcorrection() function}
-  \item{saveIndividualSignature}{if TRUE a .RData file is stored in the working directory with the result of the signatureFinder() function}
   \item{saveSurvivalCurvesPlot}{if TRUE a plot of the two survival curves of the signature are stored in a .pdf file in the working directory}
+  \item{saveIndividualSignature}{if TRUE a .RData file is stored in the working directory with the result of the signatureFinder() function}
   \item{saveImportancePlot}{if TRUE a plot of the importances of the genes in the signature are stored in a .pdf file in the working directory}
-  \item{saveRegulationPlot}{if TRUE a plot of the regulation (up/down) of the genes in the signature are stored in a .pdf file in the working directory}
 }
 \details{The plotting of the figures may not work if a graphical device is not
-instantiated. If the package "WriteXLS" is installed and loaded before running
-the function, a number of .xls table are stored in the working directory.}
-\value{NULL}
+instantiated. }
+\value{Different files can be found in the getwd() directory.}
 %%\references{
 %% ~put references to the literature/web site here ~
 %%}
@@ -57,15 +56,10 @@ get("puttingAllTogether")
 #data(stNSCLC)
 #stData <- stNSCLC
 
-# if the library "WriteXLS" is installed,
-# some XLS tables will be store in the working directory;
-# otherwise they are print to screen.
-
 #puttingAllTogether(
 #	workingFile = "NSCLC",
 ######### modify the number of cpu according to your machine
 #	nchips = 2,
-#	useCpuCluster = TRUE,
 #	saveIndividualSignature = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

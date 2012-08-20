@@ -1,6 +1,5 @@
 pValueFun <-
-function(ndx, coeffMissingAllowed = 0.75)
-  {
+function(ndx, coeffMissingAllowed = 0.75) {
     notMissing <- apply(!is.na(geData[, ndx]), 1, sum)
     notMissing <- notMissing > floor((length(ndx)-1)^coeffMissingAllowed)
     aClassify <- classify(geData[notMissing, ndx])$clusters

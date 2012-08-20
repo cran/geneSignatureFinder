@@ -53,13 +53,12 @@ data(stNSCLC)
 stData <- stNSCLC
 # set the dimension of the cpu's cluster (use a value different from 2 
 # depending on the number of cpu avalilable)
-aNCPUS <-NCPUS(nchips = 2)
-# set the starting gene to STX1A
-geneSeed <- which(colnames(geData) == "SELP")
-ans <- signatureFinder(geneSeed, logFilePrefix = "test", cpuCluster = aNCPUS)
-ans <- importance(ans)
-ans <- testGE(ans)
-signatureTable <- signatureSummaryTable(ans)
+aMakeCluster <- makeCluster(2)
+signature <- signatureFinder(which(colnames(geData) == "HIF1a"),
+  cpuCluster = aMakeCluster)
+signature <- importance(signature)
+signature <- testGE(signature)
+signatureTable <- signatureSummaryTable(signature)
 print(signatureTable)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

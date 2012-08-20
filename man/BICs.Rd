@@ -8,11 +8,11 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-BICs(data, clusters, cutoff = 2.5)
+BICs(ddata, clusters, cutoff = 2.5)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{dataset on which the bayesian information criteria have to be computed
+  \item{ddata}{dataset on which the bayesian information criteria have to be computed
 %%     ~~Describe \code{data} here~~
 }
   \item{clusters}{a list 0-1 of the same length of dataset indicating to which cluster a value belongs
@@ -44,14 +44,11 @@ The paremeter that controls the mixing of the two gaussians under the second hyp
 \examples{
 data(geNSCLC)
 ans <- classify(geNSCLC[, "STX1A"])
-# convert the indicators 1-2 of the clusters to the 0-1 values
-ans$clusters <- (ans$clusters < 2)*1
 BICs(geNSCLC[, "STX1A"], ans$clusters)
 
 # an example with missing values
 data(geNSCLC)
 ans <- classify(geNSCLC[, "CALCA"])
-ans$clusters[!ans$missing] <- (ans$clusters[!ans$missing] < 2)*1
 BICs(geNSCLC[!ans$missing, "CALCA"], ans$clusters[!ans$missing])
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

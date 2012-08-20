@@ -1,8 +1,8 @@
 classify <-
-function(data) {
-  if(is.matrix(data)) {
-      ans <- pam(data, 2)
+function(ddata) {
+  if(is.matrix(ddata)) {
+      ans <- pam(ddata, 2)
       ans$clusters <- ans$clustering
-    } else {ans <- pamUnbiased(data)}
+    } else {ans <- pamUnbiased(ddata)}
   return(ans)
 }

@@ -1,6 +1,5 @@
 BHcorrection <-
-function(pvs, alpha = 0.05)
-  {
+function(pvs, alpha = 0.05) {
     m <- length(pvs)
     hatK <- rev(which(m*pvs[order(pvs)]/1:m < alpha))[1]
     hatK <- ifelse(is.na(hatK), 1, hatK)
